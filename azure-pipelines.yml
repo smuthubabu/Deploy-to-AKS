@@ -20,7 +20,7 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        containerRegistry: 'K8SExamplesACR'
+        containerRegistry: 'azmbK8SExamplesACR connection'
         repository: '$(imageRepo)'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
@@ -36,8 +36,8 @@ stages:
   displayName: Deploy to Dev
   dependsOn: Build
   variables:
-    acrsecret: k8sexamplesacrauth
-    acrdevurl: 'k8sexamplesacr.azurecr.io'
+    acrsecret: azmbK8SExamplesACR connectionauth
+    acrdevurl: 'azmbK8SExamplesACR connection.azurecr.io'
     replicaNo: 3
   jobs:
   - deployment: Deploy
@@ -60,7 +60,7 @@ stages:
               namespace: 'default'
               secretType: 'dockerRegistry'
               secretName: '$(acrsecret)'
-              dockerRegistryEndpoint: 'K8SExamplesACR'
+              dockerRegistryEndpoint: 'azmbK8SExamplesACR connection'
           - task: replacetokens@3
             displayName: Replace Tokens
             inputs:
