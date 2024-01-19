@@ -57,7 +57,7 @@ stages:
           - task: KubernetesManifest@0
             inputs:
               action: 'createSecret'
-              namespace: 'default'
+              namespace: $(k8sNamespace)
               secretType: 'dockerRegistry'
               secretName: '$(acrsecret)'
               dockerRegistryEndpoint: 'azmbK8SExamplesACR connection'
@@ -78,7 +78,7 @@ stages:
           - task: KubernetesManifest@0
             inputs:
               action: 'deploy'
-              namespace: 'default'
+              namespace: $(k8sNamespace)
               manifests: |
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
